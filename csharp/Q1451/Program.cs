@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Q1451
 {
@@ -10,6 +7,7 @@ namespace Q1451
     {
         static void Main(string[] args)
         {
+            #region n,m,matrix 입력받는 코드
             var nm = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(item => int.Parse(item)).ToArray();
             int n = nm[0], m = nm[1];
             int[,] matrix = new int[n, m];
@@ -21,12 +19,13 @@ namespace Q1451
                     matrix[i, j] = nums[j];
                 }
             }
+            #endregion
 
             long result = calculate(matrix, 3, 0, 0, n, m);
             Console.WriteLine(result);
         }
 
-        private static long calculate(int[,] matrix,int sliceCount, int sX, int sY, int eX, int eY)
+        private static long calculate(int[,] matrix, int sliceCount, int sX, int sY, int eX, int eY)
         {
             if (sliceCount == 1)
             {
@@ -35,7 +34,7 @@ namespace Q1451
 
             long max = 0;
             // 4가지 케이스로 1/2로 슬라이스
-            for (var i = sX+1; i < eX; i++)
+            for (var i = sX + 1; i < eX; i++)
             {
                 // [v][ ]
                 max = Math.Max(max, sumOfRect(matrix, sX, sY, i, eY) * calculate(matrix, sliceCount - 1, i, sY, eX, eY));
@@ -54,7 +53,7 @@ namespace Q1451
             return max;
         }
 
-        private static long sumOfRect(int[,] matrix, int sX, int sY, int eX,int eY)
+        private static long sumOfRect(int[,] matrix, int sX, int sY, int eX, int eY)
         {
             long sum = 0;
             for (var i = sX; i < eX; i++) for (var j = sY; j < eY; j++) sum += matrix[i, j];
